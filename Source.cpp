@@ -23,11 +23,9 @@ int main(int argc, char **argv) {
 	}
 
 	// Map to read employees into
-	map<string, Employee> employees;
-	ifstream empFile(argv[1]);
+	multimap<string, Employee> employees;
 	// Open employee file
-	//ifstream empFile("C:\\Users\\Leah\\ClionProjects\\technicaTest"
-	// "\\employees.txt");
+	ifstream empFile(argv[1]);
 
 	// Check if file is open
 	if (!empFile.is_open()) {
@@ -47,21 +45,24 @@ int main(int argc, char **argv) {
 		empFile >> newEmp.jobTitle;
 		// Read in phone number
 		empFile >> newEmp.phoneNum;
-		// Format phone number
-		newEmp.phoneNum.insert(0, "(");
-		newEmp.phoneNum.insert(4, ")");
-		newEmp.phoneNum.insert(8, "-");
 		// Insert employee into map
-		employees[newEmp.lastName] = newEmp;
+		employees.insert(pair<string, Employee>(newEmp.lastName, newEmp));
+		//employees[newEmp.lastName] = newEmp;
 	}
 	// Close file
 	empFile.close();
 	// Iterator to go through map
-	map<string, Employee>::iterator it;
+	//map<string, Employee>::iterator it;
+	auto it = employees.begin();
 	// Print out each employee from the map
 	for (it = employees.begin(); it != employees.end(); ++it){
-		cout << it->first << ", " << it->second.firstName << " " <<
-			it->second.jobTitle << " " << it->second.phoneNum << endl;
+		// Format phone number
+		string phone = it->second.phoneNum;
+		phone.insert(0, "(");
+		phone.insert(4, ")");
+		phone.insert(8, "-");
+		cout << it->second.lastName << ", " << it->second.firstName << " " <<
+			it->second.jobTitle << " " << phone << endl;
 	}
 	return 0;
 }
