@@ -3,17 +3,9 @@
 #include <fstream>
 #include <iterator>
 #include <string>
+#include "Header.h"
 
 using namespace std;
-
-// Employee object to put in map
-class Employee {
-public:
-	string firstName;
-	string lastName;
-	string jobTitle;
-	string phoneNum;
-};
 
 int main(int argc, char **argv) {
 	// Check if there are enough arguments to run
@@ -23,6 +15,7 @@ int main(int argc, char **argv) {
 	}
 
 	// Map to read employees into
+	// Multimap allows for duplicate last names
 	multimap<string, Employee> employees;
 	// Open employee file
 	ifstream empFile(argv[1]);
@@ -47,12 +40,10 @@ int main(int argc, char **argv) {
 		empFile >> newEmp.phoneNum;
 		// Insert employee into map
 		employees.insert(pair<string, Employee>(newEmp.lastName, newEmp));
-		//employees[newEmp.lastName] = newEmp;
 	}
 	// Close file
 	empFile.close();
 	// Iterator to go through map
-	//map<string, Employee>::iterator it;
 	auto it = employees.begin();
 	// Print out each employee from the map
 	for (it = employees.begin(); it != employees.end(); ++it){
