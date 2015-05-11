@@ -1,9 +1,9 @@
 #include <iostream>
 #include <string>
+#pragma once
 
 using namespace std;
 
-// Employee object to put in map
 class Employee {
 public:
 	string firstName;
